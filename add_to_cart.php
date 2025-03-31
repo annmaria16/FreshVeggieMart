@@ -28,23 +28,19 @@ if (isset($_GET['product_id'])) {
         if ($product['stock'] <= 0) {
             throw new Exception("Sorry, this product is out of stock");
         }
-
         // Check if the product is already in the cart
         $stmt = $conn->prepare("SELECT id, quantity FROM cart WHERE user_id = ? AND product_id = ?");
         $stmt->bind_param("si", $user_id, $product_id);
         $stmt->execute();
         $result = $stmt->get_result();
-
         if ($result->num_rows > 0) {
             // Product already in cart, update quantity
             $cart_item = $result->fetch_assoc();
             $new_quantity = $cart_item['quantity'] + 1;
-
             // Check if new quantity exceeds stock
             if ($new_quantity > $product['stock']) {
                 throw new Exception("Cannot add more of this product due to stock limitations");
             }
-
             $stmt = $conn->prepare("UPDATE cart SET quantity = ? WHERE id = ?");
             $stmt->bind_param("ii", $new_quantity, $cart_item['id']);
             $stmt->execute();

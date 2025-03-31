@@ -329,7 +329,6 @@ if (!mysqli_query($conn, $sql)) {
     die("Error creating cart table: " . mysqli_error($conn));
 }
 
-
 // Insert default admin account
 $admin_user_id = "admin";
 $admin_username = "admin";

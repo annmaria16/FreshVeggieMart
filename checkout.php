@@ -218,7 +218,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt =  $conn->query($sql);
 
             // Then set the flag for the newly assigned delivery boy
-            echo " next delivery boy: ".$next_delivery_boy;
+            //echo " next delivery boy: ".$next_delivery_boy;
             $sql1 = "UPDATE users SET last_assigned_delivery_boy = TRUE WHERE user_id = ?";
             $stmt1 = $conn->prepare($sql1);
             $stmt1->bind_param("s", $next_delivery_boy);
